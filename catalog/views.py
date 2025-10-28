@@ -1,5 +1,8 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render
 from django.views import generic
+from django.views.generic import UpdateView
+
 from .models import Book, Author, BookInstance, Genre
 
 def index(request):
@@ -37,3 +40,13 @@ class AuthorListView(generic.ListView):
 
 class AuthorDetailView(generic.DetailView):
     model = Author
+
+class AuthorUpdate(PermissionRequiredMixin, UpdateView):
+    model = Author
+    fields = '__all__'
+    permission_required = 'catalog.change_authors'
+
+class AuthorDelete (PermissionRequiredMixin, UpdateView):
+    model = Author
+    fields = '__all__'
+    permission_required = 'catalog.delete_delete'
