@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from datetime import date
 
 
+
 class Genre(models.Model):
     """
     Model representing a book genre (e.g. Science Fiction, Non Fiction).
@@ -113,4 +114,6 @@ class Author(models.Model):
         String for representing the Model object.
         """
         return '%s, %s' % (self.last_name, self.first_name)
+
+
 

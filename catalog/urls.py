@@ -12,5 +12,9 @@ urlpatterns = [
     path('authors/', views.AuthorListView.as_view(), name='authors'),
     re_path(r'^author/(?P<pk>\d+)$',views.AuthorDetailView.as_view(), name='author-detail'),
     path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
+    path('borrowed/', views.AllBorrowedBooksListView.as_view(), name='all-borrowed'),
+    path(r'^book/(?P<pk>[-\w]+)/renew/$', views.renew_book_librarian, name='renew-book-librarian'),
+    path('author/<int:pk>/update/', views.AuthorUpdate.as_view(), name='author_update'),
+    path(r'^author/(?P<pk>\d+)/delete/$', views.AuthorDelete.as_view(), name='author_delete'),
 
 ]
