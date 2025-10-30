@@ -115,16 +115,42 @@ class AuthorCreate(CreateView):
     model = Author
     fields = '__all__'
     initial={'date_of_death':'12/10/2016',}
-    template_name = 'catalog/author_form.html'
+    #template_name = 'catalog/author_form.html'
 
 class AuthorUpdate(UpdateView):
     model = Author
     fields = ['first_name','last_name','date_of_birth','date_of_death']
-    template_name = 'catalog/author_form.html'
+    #template_name = 'catalog/author_form.html'
 
 class AuthorDelete(DeleteView):
     model = Author
     success_url = reverse_lazy('authors')
+
+from .forms import BookForm, BookDeleteForm
+
+class BookCreate(CreateView):
+    model = Book
+    form_class = BookForm
+    template_name = 'catalog/book_form.html'  # Укажите имя шаблона
+    success_url = reverse_lazy('books') # перенаправление после успешного создания
+    # success_url = '/catalog/books/'  # Альтернативный вариант
+
+class BookUpdate(UpdateView):
+    model = Book
+    form_class = BookForm
+    template_name = 'catalog/book_form.html' # Укажите имя шаблона
+    success_url = reverse_lazy('books')
+
+    def get_object(self, queryset=None):
+        """
+        Возвращает объект, который будет обработан формой.
+        """
+        return get_object_or_404(Book, pk=self.kwargs['pk'])
+
+class BookDelete(DeleteView):
+    model = Book
+    template_name = 'catalog/book_confirm_delete.html'  # Укажите имя шаблона
+    success_url = reverse_lazy('books')
 
 
 

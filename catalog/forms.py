@@ -27,3 +27,36 @@ class RenewBookForm(forms.Form):
         fields = ['due_back', ]
         labels = {'due_back': _('Renewal date'), }
         help_texts = {'due_back': _('Enter a date between now and 4 weeks (default 3).'), }
+
+from django import forms
+from .models import Book
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title', 'author', 'summary', 'isbn', 'genre']
+
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'summary': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
+
+        labels = {
+            'title': 'Title',
+            'summary': 'Summary',
+            # и т.д.
+        }
+
+        help_texts = {
+            'isbn': '13 Character ISBN number',
+        }
+
+class BookDeleteForm(forms.Form):
+    confirmation = forms.BooleanField(
+        required=True,
+        widget=forms.HiddenInput(),
+        initial=True
+    )
+
+
+
